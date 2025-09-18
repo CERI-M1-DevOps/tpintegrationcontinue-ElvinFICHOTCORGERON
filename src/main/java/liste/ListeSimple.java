@@ -142,11 +142,11 @@ public class ListeSimple {
     }
 
     private boolean isElementNotEmpty(Noeud element) {
-        return element != null
+        return element != null ;
     }
 
     private boolean isElementNotCourant(Noeud element, Noeud courant){
-        return isElementNotEmpty(courant) && courant.getElement() != element
+        return isElementNotEmpty(courant) && courant.getElement() != element ;
     }
 
 }

@@ -327,26 +327,58 @@ public class ListeSimpleTest {
     }
 
     @Test
-    public void echangerQuandR2EstTete() {
-        // construit la liste : 4 -> 3 -> 2 -> 1
+    public void echangerQuandR2EstTete_R1NonAdjacent() {
+        // construit 4 -> 3 -> 2 -> 1
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.ajout(4);
 
-        // r1 = noeud contenant 2 (pas la tête), r2 = la tête (4)
-        Noeud r1 = listeATester.tete.getSuivant().getSuivant(); // noeud "2"
-        Noeud r2 = listeATester.tete; // noeud "4", la tête
+        Noeud r1 = findNode(2);       // noeud "2" (non-adjacent à la tête)
+        Noeud r2 = listeATester.tete; // noeud "4" (la tête)
 
-        // Vérification de départ
-        assertEquals("ListeSimple(Noeud(4), Noeud(3), Noeud(2), Noeud(1))", listeATester.toString());
+        assertNotNull(r1);
+        assertNotNull(r2);
+        assertNotSame(r1, r2);
 
-        // Exécution -> doit passer par le bloc "else if (r2 == tete)"
         listeATester.echanger(r1, r2);
 
-        // Après échange : la tête devient "2"
+        // résultat attendu après échange : 2 -> 3 -> 4 -> 1
         assertEquals("ListeSimple(Noeud(2), Noeud(3), Noeud(4), Noeud(1))", listeATester.toString());
-        assertEquals(4, listeATester.getSize());
+    }
+
+    @Test
+    public void echangerQuandR2EstTete_R1Adjacent() {
+        // construit 4 -> 3 -> 2 -> 1
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        listeATester.ajout(4);
+
+        Noeud r1 = listeATester.tete.getSuivant(); // noeud "3" (adjacent à la tête)
+        Noeud r2 = listeATester.tete;               // noeud "4" (la tête)
+
+        listeATester.echanger(r1, r2);
+
+        // résultat attendu après échange : 3 -> 4 -> 2 -> 1
+        assertEquals("ListeSimple(Noeud(3), Noeud(4), Noeud(2), Noeud(1))", listeATester.toString());
+    }
+
+    @Test
+    public void echangerQuandR2EstTete_R1Dernier() {
+        // construit 4 -> 3 -> 2 -> 1
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        listeATester.ajout(4);
+
+        Noeud r1 = findNode(1);       // noeud "1" (dernier)
+        Noeud r2 = listeATester.tete; // noeud "4" (la tête)
+
+        listeATester.echanger(r1, r2);
+
+        // résultat attendu après échange : 1 -> 3 -> 2 -> 4
+        assertEquals("ListeSimple(Noeud(1), Noeud(3), Noeud(2), Noeud(4))", listeATester.toString());
     }
 
     private Noeud findNode(Object element) {

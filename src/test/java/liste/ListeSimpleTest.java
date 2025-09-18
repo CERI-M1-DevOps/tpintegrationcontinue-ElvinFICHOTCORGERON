@@ -270,4 +270,41 @@ public class ListeSimpleTest {
         assertEquals(3, listeATester.getSize());
     }
 
+    @Test
+    public void modifiePremierEnTete() {
+        // crée la liste 3 -> 2 -> 1 (ajout place en tete)
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+
+        // modifier l'élément en tête (3 -> 42)
+        listeATester.modifiePremier(3, 42);
+
+        // vérifications : la tete a bien été modifiée et toString correct
+        assertEquals(listeATester.toString(), "ListeSimple(Noeud(42), Noeud(2), Noeud(1))");
+        assertEquals(42, listeATester.tete.getElement());
+    }
+
+    @Test
+    public void modifiePremierElementAbsent() {
+        // crée la liste 3 -> 2 -> 1
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+
+        // tenter de modifier un élément qui n'existe pas : rien ne doit changer
+        listeATester.modifiePremier(99, 42);
+
+        assertEquals(listeATester.toString(), "ListeSimple(Noeud(3), Noeud(2), Noeud(1))");
+        assertEquals(3, listeATester.getSize());
+    }
+
+    @Test
+    public void modifiePremierListeVide() {
+        // sur liste vide, appeler modifiePremier ne doit rien casser
+        listeATester.modifiePremier(1, 10);
+        assertNull(listeATester.tete);
+        assertEquals(0, listeATester.getSize());
+    }
+
 }

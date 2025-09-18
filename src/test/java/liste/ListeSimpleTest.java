@@ -307,4 +307,58 @@ public class ListeSimpleTest {
         assertEquals(0, listeATester.getSize());
     }
 
+    @Test
+    public void echangerMemeNoeudNeChangeRien() {
+        // liste = 3 -> 2 -> 1
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+
+        // on récupère un noeud quelconque (ici le noeud contenant 2)
+        Noeud n = findNode(2);
+        String before = listeATester.toString();
+
+        // appel avec les mêmes références : doit retourner immédiatement (branche r1==r2)
+        listeATester.echanger(n, n);
+
+        // rien ne doit avoir changé
+        assertEquals(listeATester.toString(), before);
+        assertEquals(3, listeATester.getSize());
+    }
+
+    @Test
+    public void echangerQuandR2EstTete() {
+        // construit 4 -> 3 -> 2 -> 1
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        listeATester.ajout(4);
+
+        // r1 : noeud contenant 2 (pas la tête), r2 : tete (4)
+        Noeud r1 = findNode(2);
+        Noeud r2 = listeATester.tete;
+
+        assertNotNull(r1);
+        assertNotNull(r2);
+        assertNotSame(r1, r2);
+
+        // exécution : doit prendre la branche else if (r2 == tete)
+        listeATester.echanger(r1, r2);
+
+        // vérifier l'ordre attendu après échange (calculé pour ce cas)
+        assertEquals(listeATester.toString(), "ListeSimple(Noeud(2), Noeud(3), Noeud(4), Noeud(1))");
+        assertEquals(4, listeATester.getSize());
+    }
+
+    private Noeud findNode(Object element) {
+        Noeud cur = listeATester.tete;
+        while (cur != null) {
+            if (element == null ? cur.getElement() == null : element.equals(cur.getElement())) {
+                return cur;
+            }
+            cur = cur.getSuivant();
+        }
+        return null;
+    }
+
 }

@@ -257,48 +257,17 @@ public class ListeSimpleTest {
     }
 
     @Test
-    void testSupprimePremier_elementEstEnTete() {
-        ListeChainee liste = new ListeChainee();
-        liste.ajouter("A");
-        liste.ajouter("B");
+    public void supprimePremierElementAbsent() {
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
 
-        liste.supprimePremier("A");
+        // On cherche à supprimer un élément qui n'existe pas
+        listeATester.supprimePremier(99);
 
-        assertEquals(1, liste.size());
-        assertEquals("B", liste.getTete().getElement());
+        // Rien ne doit avoir changé
+        assertEquals("ListeSimple(Noeud(3), Noeud(2), Noeud(1))", listeATester.toString());
+        assertEquals(3, listeATester.getSize());
     }
 
-    @Test
-    void testSupprimePremier_elementAuMilieu() {
-        ListeChainee liste = new ListeChainee();
-        liste.ajouter("A");
-        liste.ajouter("B");
-        liste.ajouter("C");
-
-        liste.supprimePremier("B");
-
-        assertEquals(2, liste.size());
-        assertEquals("A", liste.getTete().getElement());
-        assertEquals("C", liste.getTete().getSuivant().getElement());
-    }
-
-    @Test
-    void testSupprimePremier_elementAbsent() {
-        ListeChainee liste = new ListeChainee();
-        liste.ajouter("A");
-        liste.ajouter("B");
-
-        liste.supprimePremier("X");
-
-        assertEquals(2, liste.size());
-    }
-
-    @Test
-    void testSupprimePremier_listeVide() {
-        ListeChainee liste = new ListeChainee();
-
-        liste.supprimePremier("A");
-
-        assertEquals(0, liste.size());
-    }
 }

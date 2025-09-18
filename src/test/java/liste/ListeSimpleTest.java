@@ -255,4 +255,50 @@ public class ListeSimpleTest {
         System.out.println(listeATester);
         assertEquals(listeATester.toString(), "ListeSimple(Noeud(4), Noeud(2), Noeud(3), Noeud(1), Noeud(5))");
     }
+
+    @Test
+    void testSupprimePremier_elementEstEnTete() {
+        ListeChainee liste = new ListeChainee();
+        liste.ajouter("A");
+        liste.ajouter("B");
+
+        liste.supprimePremier("A");
+
+        assertEquals(1, liste.size());
+        assertEquals("B", liste.getTete().getElement());
+    }
+
+    @Test
+    void testSupprimePremier_elementAuMilieu() {
+        ListeChainee liste = new ListeChainee();
+        liste.ajouter("A");
+        liste.ajouter("B");
+        liste.ajouter("C");
+
+        liste.supprimePremier("B");
+
+        assertEquals(2, liste.size());
+        assertEquals("A", liste.getTete().getElement());
+        assertEquals("C", liste.getTete().getSuivant().getElement());
+    }
+
+    @Test
+    void testSupprimePremier_elementAbsent() {
+        ListeChainee liste = new ListeChainee();
+        liste.ajouter("A");
+        liste.ajouter("B");
+
+        liste.supprimePremier("X");
+
+        assertEquals(2, liste.size());
+    }
+
+    @Test
+    void testSupprimePremier_listeVide() {
+        ListeChainee liste = new ListeChainee();
+
+        liste.supprimePremier("A");
+
+        assertEquals(0, liste.size());
+    }
 }

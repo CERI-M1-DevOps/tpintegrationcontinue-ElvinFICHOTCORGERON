@@ -361,4 +361,28 @@ public class ListeSimpleTest {
         return null;
     }
 
+    @Test
+    public void echangerQuandR2EstTete() {
+        // construit la liste : 4 -> 3 -> 2 -> 1
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        listeATester.ajout(4);
+
+        // r1 = noeud contenant 2 (pas la tête), r2 = la tête (4)
+        Noeud r1 = listeATester.tete.getSuivant().getSuivant(); // noeud "2"
+        Noeud r2 = listeATester.tete; // noeud "4", la tête
+
+        // Vérification de départ
+        assertEquals("ListeSimple(Noeud(4), Noeud(3), Noeud(2), Noeud(1))", listeATester.toString());
+
+        // Exécution -> doit passer par le bloc "else if (r2 == tete)"
+        listeATester.echanger(r1, r2);
+
+        // Après échange : la tête devient "2"
+        assertEquals("ListeSimple(Noeud(2), Noeud(3), Noeud(4), Noeud(1))", listeATester.toString());
+        assertEquals(4, listeATester.getSize());
+    }
+
+
 }
